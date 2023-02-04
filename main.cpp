@@ -1,7 +1,7 @@
 // 01.04.2017
 // https://www.cyberforum.ru/cpp-beginners/thread1950533.html#post10284148
-// игра "Пятнашки"
-// управление стрелками
+// РёРіСЂР° "РџСЏС‚РЅР°С€РєРё"
+// СѓРїСЂР°РІР»РµРЅРёРµ СЃС‚СЂРµР»РєР°РјРё
 
 #include <iostream>
 #include <vector>
@@ -12,21 +12,21 @@
 using std::vector;
 using std::cout;
 
-const int SIZE = 4; // размер игрового поля
+const int SIZE = 4; // СЂР°Р·РјРµСЂ РёРіСЂРѕРІРѕРіРѕ РїРѕР»СЏ
 
 vector<int> in_game_map(SIZE); 
-vector<vector<int>> game_map(SIZE, in_game_map); // игровая карта
+vector<vector<int>> game_map(SIZE, in_game_map); // РёРіСЂРѕРІР°СЏ РєР°СЂС‚Р°
 
 vector<int> in_right_map(SIZE); 
-vector<vector<int>> right_map(SIZE, in_right_map); // правильная итоговая карта
+vector<vector<int>> right_map(SIZE, in_right_map); // РїСЂР°РІРёР»СЊРЅР°СЏ РёС‚РѕРіРѕРІР°СЏ РєР°СЂС‚Р°
 
-struct coordinate // хранилище координат нулевого элемента
+struct coordinate // С…СЂР°РЅРёР»РёС‰Рµ РєРѕРѕСЂРґРёРЅР°С‚ РЅСѓР»РµРІРѕРіРѕ СЌР»РµРјРµРЅС‚Р°
 {
 	int x;
 	int y;
-} zero; // объект
+} zero; // РѕР±СЉРµРєС‚
 
-void create_right_map() // создаем правильную карту заполненую по порядку
+void create_right_map() // СЃРѕР·РґР°РµРј РїСЂР°РІРёР»СЊРЅСѓСЋ РєР°СЂС‚Сѓ Р·Р°РїРѕР»РЅРµРЅСѓСЋ РїРѕ РїРѕСЂСЏРґРєСѓ
 {
 	int right_value = 1;
 	for (int i = 0; i < SIZE; i++)
@@ -34,13 +34,13 @@ void create_right_map() // создаем правильную карту заполненую по порядку
 		for (int j = 0; j < SIZE; j++)
 			right_map[i][j] = right_value++;
 	}
-	right_map[SIZE-1][SIZE-1] = 0; // нулевой элемент в нижний правый угол
+	right_map[SIZE-1][SIZE-1] = 0; // РЅСѓР»РµРІРѕР№ СЌР»РµРјРµРЅС‚ РІ РЅРёР¶РЅРёР№ РїСЂР°РІС‹Р№ СѓРіРѕР»
 }
 
-void create_game_map() // рандомно создаем игровую карту
+void create_game_map() // СЂР°РЅРґРѕРјРЅРѕ СЃРѕР·РґР°РµРј РёРіСЂРѕРІСѓСЋ РєР°СЂС‚Сѓ
 {
 	int limit = SIZE*SIZE;
-	vector<int> temporary; // временный массив из которого будем брать значения в игровую карту
+	vector<int> temporary; // РІСЂРµРјРµРЅРЅС‹Р№ РјР°СЃСЃРёРІ РёР· РєРѕС‚РѕСЂРѕРіРѕ Р±СѓРґРµРј Р±СЂР°С‚СЊ Р·РЅР°С‡РµРЅРёСЏ РІ РёРіСЂРѕРІСѓСЋ РєР°СЂС‚Сѓ
 	for (int i = 0; i < limit; i++)
 		temporary.push_back(i);
 
@@ -51,29 +51,29 @@ void create_game_map() // рандомно создаем игровую карту
 		{
 			value = rand() % limit--;
 			game_map[i][j] = temporary[value];
-			if (temporary[value] == 0) // сохраняем координаты нулевого элемента
+			if (temporary[value] == 0) // СЃРѕС…СЂР°РЅСЏРµРј РєРѕРѕСЂРґРёРЅР°С‚С‹ РЅСѓР»РµРІРѕРіРѕ СЌР»РµРјРµРЅС‚Р°
 			{
 				zero.x = j;
 				zero.y = i;
 			}
-			temporary.erase(temporary.begin() + value); // удаляем уже использованное число
+			temporary.erase(temporary.begin() + value); // СѓРґР°Р»СЏРµРј СѓР¶Рµ РёСЃРїРѕР»СЊР·РѕРІР°РЅРЅРѕРµ С‡РёСЃР»Рѕ
 		}
 	}
 }
 
-bool check_map() // сравнение игровой и правильной карты для определения конца игры
+bool check_map() // СЃСЂР°РІРЅРµРЅРёРµ РёРіСЂРѕРІРѕР№ Рё РїСЂР°РІРёР»СЊРЅРѕР№ РєР°СЂС‚С‹ РґР»СЏ РѕРїСЂРµРґРµР»РµРЅРёСЏ РєРѕРЅС†Р° РёРіСЂС‹
 {
 	if (game_map == right_map)
 		return true;
 	return false;
 }
 
-void move() // ход игрока
+void move() // С…РѕРґ РёРіСЂРѕРєР°
 {
 	int arrow = static_cast<int> (_getch()); // UP = 72, DOWN = 80, RIGHT = 77, LEFT = 75
 	switch (arrow)
 	{
-		case 72: // ход вверх (нулевой элемент вниз)
+		case 72: // С…РѕРґ РІРІРµСЂС… (РЅСѓР»РµРІРѕР№ СЌР»РµРјРµРЅС‚ РІРЅРёР·)
 		{
 			if (zero.y < SIZE - 1)
 			{
@@ -83,7 +83,7 @@ void move() // ход игрока
 			}
 			break;
 		}
-		case 80: // ход вниз (нулевой элемент вверх)
+		case 80: // С…РѕРґ РІРЅРёР· (РЅСѓР»РµРІРѕР№ СЌР»РµРјРµРЅС‚ РІРІРµСЂС…)
 		{
 			if (zero.y > 0)
 			{
@@ -93,7 +93,7 @@ void move() // ход игрока
 			}
 			break;
 		}
-		case 77: // ход вправо (нулевой элемент влево)
+		case 77: // С…РѕРґ РІРїСЂР°РІРѕ (РЅСѓР»РµРІРѕР№ СЌР»РµРјРµРЅС‚ РІР»РµРІРѕ)
 		{
 			if (zero.x > 0)
 			{
@@ -103,7 +103,7 @@ void move() // ход игрока
 			}
 			break;
 		}
-		case 75: // ход влево (нулевой элемент вправо)
+		case 75: // С…РѕРґ РІР»РµРІРѕ (РЅСѓР»РµРІРѕР№ СЌР»РµРјРµРЅС‚ РІРїСЂР°РІРѕ)
 		{
 			if (zero.x < SIZE - 1)
 			{
@@ -120,7 +120,7 @@ void move() // ход игрока
 	}
 }
 
-void screen() // выводим массив на экран
+void screen() // РІС‹РІРѕРґРёРј РјР°СЃСЃРёРІ РЅР° СЌРєСЂР°РЅ
 {
 	system("cls");
 	for (int i = 0; i < SIZE; i++)
@@ -130,7 +130,7 @@ void screen() // выводим массив на экран
 			if (game_map[i][j] != 0)
 				cout << std::setw(2) << std::setfill('0') << game_map[i][j] << ' ';
 			else
-				cout << "   "; // нулевой элемент
+				cout << "   "; // РЅСѓР»РµРІРѕР№ СЌР»РµРјРµРЅС‚
 		}
 		cout << '\n';
 	}
@@ -140,13 +140,13 @@ int main()
 {
 	srand(static_cast<int>(time(NULL)));
 	
-	create_right_map(); // создание игровых карт
+	create_right_map(); // СЃРѕР·РґР°РЅРёРµ РёРіСЂРѕРІС‹С… РєР°СЂС‚
 	do
 	{
 		create_game_map();
 	} while (check_map());
 	
-	do // игровой цикл
+	do // РёРіСЂРѕРІРѕР№ С†РёРєР»
 	{
 		screen();
 		move();
