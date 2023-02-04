@@ -14,11 +14,9 @@ using std::cout;
 
 const int SIZE = 4; // размер игрового поля
 
-vector<int> in_game_map(SIZE); 
-vector<vector<int>> game_map(SIZE, in_game_map); // игровая карта
-
-vector<int> in_right_map(SIZE); 
-vector<vector<int>> right_map(SIZE, in_right_map); // правильная итоговая карта
+vector<int> inside_map(SIZE); 
+vector<vector<int>> game_map(SIZE, inside_map); // игровая карта
+vector<vector<int>> right_map(SIZE, inside_map); // правильная итоговая карта
 
 struct coordinate // хранилище координат нулевого элемента
 {
